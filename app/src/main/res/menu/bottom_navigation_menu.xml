@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/arexionFragment"
+        android:title="@string/arexion"
+        android:icon="@drawable/ic_arexion"/>
+
+    <item android:id="@+id/xenophonFragment"
+        android:title="@string/xenophon"
+        android:icon="@drawable/ic_xenophon"/>
+
+</menu>
