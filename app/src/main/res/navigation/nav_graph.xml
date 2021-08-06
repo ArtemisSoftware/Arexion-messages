@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/arexionFragment">
+
+    <fragment
+        android:id="@+id/arexionFragment"
+        android:name="com.artemissoftware.arexionmessages.ui.ArexionFragment"
+        android:label="fragment_arexion"
+        tools:layout="@layout/fragment_arexion" />
+    <fragment
+        android:id="@+id/xenophonFragment"
+        android:name="com.artemissoftware.arexionmessages.ui.XenophonFragment"
+        android:label="fragment_xenophon"
+        tools:layout="@layout/fragment_xenophon" />
+</navigation>
