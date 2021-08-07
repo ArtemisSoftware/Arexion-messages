@@ -25,5 +25,11 @@ class XenophonFragment : Fragment(R.layout.fragment_xenophon) {
         predictionsViewModel.message.observe(viewLifecycleOwner, Observer {
             txt_arexion_prediction.text = it
         })
+
+
+        btn_believe.setOnClickListener {
+
+            predictionsViewModel.fulfilled()
+        }
     }
 }

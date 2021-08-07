@@ -48,7 +48,11 @@ class ArexionFragment : Fragment(R.layout.fragment_arexion) {
 
         }
 
-        predictionsViewModel.startVisions()
+        fab_start_predictions.setOnClickListener {
+            predictionsViewModel.startVisions()
+        }
+
+
 
 
     }

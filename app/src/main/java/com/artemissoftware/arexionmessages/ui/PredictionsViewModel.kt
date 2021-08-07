@@ -36,4 +36,8 @@ class PredictionsViewModel : ViewModel() {
     fun sendMessage(text: String) {
         message.value = text
     }
+
+    fun fulfilled() {
+        _predictions.value = Event(listOf(Prediction("My my my", true), Prediction("lolo")))
+    }
 }
