@@ -1,10 +1,10 @@
 package com.artemissoftware.arexionmessages.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.artemissoftware.arexionmessages.R
@@ -30,21 +30,25 @@ class ArexionFragment : Fragment(R.layout.fragment_arexion) {
 
         predictionsViewModel = ViewModelProvider(requireActivity()).get(PredictionsViewModel::class.java)
 
+
         _binding = FragmentArexionBinding.bind(view)
-        binding.lifecycleOwner = this
         binding.model = predictionsViewModel
+        binding.lifecycleOwner = this
 
         setupRecyclerView()
 
-        predictionsViewModel.startVisions()
+
 
         predictionsViewModel.predictions.observe(viewLifecycleOwner) {
-            predictionListAdapter.submitList(it)
 
-            predictionsViewModel.sendMessage(it[0].description)
+            it.getContentIfNotHandled()?.let { // Only proceed if the event has never been handled
+                predictionListAdapter.submitList(it)
+                predictionsViewModel.sendMessage(it[0].description)
+            }
+
         }
 
-
+        predictionsViewModel.startVisions()
 
 
     }
