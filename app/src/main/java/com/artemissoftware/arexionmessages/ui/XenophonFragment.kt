@@ -20,16 +20,39 @@ class XenophonFragment : Fragment(R.layout.fragment_xenophon) {
 
         predictionsViewModel = ViewModelProvider(requireActivity()).get(PredictionsViewModel::class.java)
 
-
-
         predictionsViewModel.message.observe(viewLifecycleOwner, Observer {
-            txt_arexion_prediction.text = it
+
+            btn_believe.visibility = View.GONE
+            btn_not_believe.visibility = View.GONE
+            textView.visibility = View.GONE
+            txt_arexion_prediction.visibility = View.GONE
+
+            it?.let {
+
+                txt_arexion_prediction.text = it.description
+
+                btn_believe.visibility = View.VISIBLE
+                btn_not_believe.visibility = View.VISIBLE
+                textView.visibility = View.VISIBLE
+                txt_arexion_prediction.visibility = View.VISIBLE
+            }
+
+
         })
 
 
         btn_believe.setOnClickListener {
 
             predictionsViewModel.fulfilled()
+            btn_believe.isEnabled = false
+            btn_not_believe.visibility = View.GONE
+        }
+
+        btn_not_believe.setOnClickListener {
+
+            predictionsViewModel.notfulfilled()
+            btn_not_believe.isEnabled = false
+            btn_believe.visibility = View.GONE
         }
     }
 }

@@ -11,6 +11,7 @@ import com.artemissoftware.arexionmessages.R
 import com.artemissoftware.arexionmessages.databinding.FragmentArexionBinding
 import com.artemissoftware.arexionmessages.ui.adapters.PredictionListAdapter
 import com.artemissoftware.arexionmessages.ui.models.Prediction
+import com.artemissoftware.arexionmessages.util.observeOnce
 import kotlinx.android.synthetic.main.fragment_arexion.*
 
 
@@ -38,15 +39,13 @@ class ArexionFragment : Fragment(R.layout.fragment_arexion) {
         setupRecyclerView()
 
 
-
         predictionsViewModel.predictions.observe(viewLifecycleOwner) {
 
-            it.getContentIfNotHandled()?.let { // Only proceed if the event has never been handled
-                predictionListAdapter.submitList(it)
-                predictionsViewModel.sendMessage(it[0].description)
-            }
+            predictionListAdapter.submitList(it?.toMutableList())
+            predictionsViewModel.sendMessage()
 
         }
+
 
         fab_start_predictions.setOnClickListener {
             predictionsViewModel.startVisions()

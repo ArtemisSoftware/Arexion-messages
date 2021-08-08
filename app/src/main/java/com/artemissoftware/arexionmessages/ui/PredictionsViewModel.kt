@@ -11,33 +11,51 @@ import com.artemissoftware.arexionmessages.util.Event
 
 class PredictionsViewModel : ViewModel() {
 
-    val message = MutableLiveData<String>()
+    val message = MutableLiveData<Prediction>()
 
-    private val _predictions = MutableLiveData<Event<List<Prediction>>>()
-    val predictions: LiveData<Event<List<Prediction>>> = _predictions
+    private val _predictions = MutableLiveData<List<Prediction>>()
+    val predictions: LiveData<List<Prediction>> = _predictions
 
     private val _predicting  = MutableLiveData<Int>(View.GONE)
     val predicting: LiveData<Int> = _predicting
+
+
+    private var listPrediction = mutableListOf<Prediction>()
+    private var masterListPrediction = listOf<Prediction>(Prediction("Prediction number 1"), Prediction("Prediction number 2"), Prediction("Prediction number 3"))
+    private var position = 0
 
     fun startVisions(){
 
         _predicting.value = View.VISIBLE
 
+
         Handler(Looper.getMainLooper()).postDelayed({
 
+            if(masterListPrediction.size == position){
+                _predicting.value = View.GONE
+                return@postDelayed;
+            }
 
-            _predictions.value = Event(listOf(Prediction("My my my")))
+            listPrediction.add(0, masterListPrediction[position])
+            ++position
+            _predictions.value = listPrediction
             _predicting.value = View.GONE
-        }, 4000)
+        }, 400)
 
     }
 
 
-    fun sendMessage(text: String) {
-        message.value = text
-    }
+    fun sendMessage() {
+        message.value = listPrediction.find { item-> item.fulfilled == 0}
+        }
 
     fun fulfilled() {
-        _predictions.value = Event(listOf(Prediction("My my my", true), Prediction("lolo")))
+        listPrediction.find { item-> item.description == message.value?.description }?.fulfilled = 1
+        _predictions.value = listPrediction
+    }
+
+    fun notfulfilled() {
+        listPrediction.find { item-> item.description == message.value?.description }?.fulfilled = 2
+        _predictions.value = listPrediction
     }
 }
